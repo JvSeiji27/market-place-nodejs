@@ -9,7 +9,7 @@ router.get("findAll/", userController.findAllUsersController);
 //ROTAS POST
 router.post("create/", userController.createUserController);
 router.post("addAddress/:id",userController.addUserAddressController);
-router.post("addFavProduct/:id", userController.addUserFavProduct);
+router.post("addFavProduct/:id", userController.addUserFavProductController);
 
 //ROTAS PUT
 router.put("update/:id", userController.updateUserController);
@@ -17,7 +17,7 @@ router.put("update/:id", userController.updateUserController);
 //ROTAS DELETE
 router.delete("remove/:id", userController.removeUserController);
 router.delete("removeAddress/", userController.removeUserAddressController);
-router.delete("removeFavProduct/", userController.removeUserFavProduct) ;
+router.delete("removeFavProduct/", userController.removeUserFavProductController) ;
 
 
 
