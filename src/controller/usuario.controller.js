@@ -44,7 +44,7 @@ const createUserController = async (req, res) => {
         if (!user || Object.keys(user).length === 0) {
             return res.status(400).send({ message: "Body vazio" })
         }
-        const parts = ["nome", "email", "senha", "imagem", "admin"];
+        const parts = ["nome", "email", "senha", "imagem"];
         for (const part of parts) {
             if (!user[part]) {
                 return res.status(400).send(`Este campo "${part}" está vazio`);
@@ -69,13 +69,14 @@ const updateUserController = async (req, res) => {
         if (!user || Object.keys(user).length === 0) {
             return res.status(400).send({ message: "Body vazio" })
         }
-        const parts = ["nome", "email", "senha", "imagem", "admin"];
+        const parts = ["nome", "email", "senha", "imagem"];
         for (const part of parts) {
             if (!user[part]) {
                 return res.status(400).send(`Este campo "${part}" está vazio`);
             }
         }
         user = await userService.updateUserService(id, user);
+        return res.status(200).send(user);
 
     } catch (err) {
         console.log(err.message);
@@ -83,13 +84,13 @@ const updateUserController = async (req, res) => {
     }
 }
 
-const removeUserController = async (res, req) => {
+const removeUserController = async (req, res) => {
     try {
         const id = req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send({ message: "O ID está invalido!" });
         }
-        const removedUser = await userService.removeUserController(id);
+        const removedUser = await userService.removeUserService(id);
         if (!removedUser) {
             return res.status(404).send({ message: "Usuário não encontrado!" });
 
