@@ -95,7 +95,7 @@ const removeUserController = async (req, res) => {
             return res.status(404).send({ message: "Usuário não encontrado!" });
 
         } else {
-            return res.status(200).send({ removedUser});
+            return res.status(200).send({ removedUser });
 
         }
     } catch (err) {
@@ -106,8 +106,20 @@ const removeUserController = async (req, res) => {
 
 const addUserAddressController = async (req, res) => {
     try {
+        req.body.createdAt = new Date();
+        const endereco = await userService.addUserAddressService(req.params.id, req.body);
 
+        if (endereco) {
+            return res.status(200).send({ message: "Endereço adicionado com sucesso" })
+        } else {
+            console.log(endereco.ok)
+            return res.status(400).send({ message: "Algo deu errado no endereço para a adição!" })
+
+        }
     } catch (err) {
+        if (err.name == "ValidationError") {
+            return res.status(400).send({ message: "Erro de validação. Preencha todos campos!" });
+        }
         console.log(err.message);
         return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
@@ -115,7 +127,13 @@ const addUserAddressController = async (req, res) => {
 
 const removeUserAddressController = async (req, res) => {
     try {
+        const endereco = await userService.removeUserAddressService(req.body.id, req.body.addressId);
+        if (endereco) {
+            return res.status(200).send({ message: "Endereço removido com sucesso" })
+        } else {
+            return res.status(400).send({ message: "Algo deu errado no endereço para remoção!" })
 
+        }
     } catch (err) {
         console.log(err.message);
         return res.status(500).send({ message: "Erro inesperado tente novamente!" })

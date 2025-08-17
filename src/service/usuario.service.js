@@ -13,7 +13,7 @@ const createUserService = (user) => {
 }
 
 const updateUserService = (id, user) => {
-    return User.findByIdAndUpdate(id, user, {new: true});
+    return User.findByIdAndUpdate(id, user, { new: true });
 }
 
 const removeUserService = (id) => {
@@ -21,12 +21,38 @@ const removeUserService = (id) => {
 }
 
 //FAZER DEPOIS pela dependência de outros fatores
+//findOneAndUpdate (filtro, atualização e opção)
 const addUserAddressService = (id, endereco) => { //Precisa de um Id para o usuário e um body com as informações
-    
+    return User.findOneAndUpdate({ //vou achar um usuario com esse id e vou atualizar endereços como?? adicionando um endereco
+        _id: id
+    },
+        {
+            $push: {
+                enderecos: endereco
+            }
+        },
+        {
+            new: true,
+            runValidators: true
+        }
+    )
 }
 
-const removeUserAddressService = (id) => {
-
+const removeUserAddressService = (id, addressId) => {
+    return User.findOneAndUpdate({
+        _id: id, "enderecos._id": addressId //só atualiza se o endereco existir
+    },
+        {
+            $pull: {
+                enderecos: {
+                    _id: addressId
+                }
+            }
+        },
+        {
+            new: true,
+        }
+    )
 }
 
 const addUserFavProductService = (id, produto) => {
