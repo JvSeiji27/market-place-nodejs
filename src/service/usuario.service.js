@@ -22,6 +22,7 @@ const removeUserService = (id) => {
 
 //FAZER DEPOIS pela dependência de outros fatores
 //findOneAndUpdate (filtro, atualização e opção)
+//Um objeto dentro de outro é findByIdAndUpdate
 const addUserAddressService = (id, endereco) => { //Precisa de um Id para o usuário e um body com as informações
     return User.findOneAndUpdate({ //vou achar um usuario com esse id e vou atualizar endereços como?? adicionando um endereco
         _id: id

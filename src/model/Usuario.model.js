@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
     nome: {type: String, required: true},
@@ -23,6 +24,15 @@ const UserSchema = new mongoose.Schema({
     // ],
     admin: {type: Boolean, required: true, default: false}
 });
+
+//Camadas de proteção, se invadirem o banco não saberá qual é a senha original
+
+UserSchema.pre("save", async function (next) {
+    if(this.senha){
+        this.senha = await bcrypt.hash(this.senha, 10); //embaralhamento 10 vezes
+    }
+    next(); //middleware
+})
 
 const User = mongoose.model("usuario", UserSchema);
 

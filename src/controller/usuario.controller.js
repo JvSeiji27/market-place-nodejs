@@ -108,11 +108,10 @@ const addUserAddressController = async (req, res) => {
     try {
         req.body.createdAt = new Date();
         const endereco = await userService.addUserAddressService(req.params.id, req.body);
-
+        //caso não ache, retorna null
         if (endereco) {
             return res.status(200).send({ message: "Endereço adicionado com sucesso" })
         } else {
-            console.log(endereco.ok)
             return res.status(400).send({ message: "Algo deu errado no endereço para a adição!" })
 
         }
