@@ -1,11 +1,11 @@
 const express = require("express");
 const  router = express.Router();
 const userController = require("../controller/usuario.controller")
-
+const authMiddleware = require("../middleware/auth.middleware")
 //OBS: todos devem começar com barra
 
 //ROTAS GET
-router.get("/findById/:id", userController.findUserByIdController);
+router.get("/findById/:id", authMiddleware, userController.findUserByIdController);
 router.get("/findAll/", userController.findAllUsersController);
 
 //ROTAS POST
