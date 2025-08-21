@@ -5,7 +5,7 @@ const loginService = (email) => {
 }
 
 const generateToken = (userId) => {
-    return jwt.sign({id: userId}, "asjiakosoahsuijasans", {expiresIn: "1d"})
+    return jwt.sign({id: userId}, process.env.SECRET, {expiresIn: "1d"})
 }
 
 module.exports = {loginService, generateToken

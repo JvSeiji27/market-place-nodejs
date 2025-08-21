@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectToDatabase = () => {
-    mongoose.connect("mongodb://localhost:27017/market-place")
+    mongoose.connect(process.env.URLDATABASE)
         .then(() => {
             console.log("Conexão feita com o banco de dados");
         })
