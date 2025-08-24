@@ -4,7 +4,7 @@ const categoriaController = require("../controller/categoria.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 
 router.get("/findById/:id", authMiddleware, categoriaController.findCategoriaByIdController)
-router.get("/findAll", authMiddleware, categoriaController.findAllCategoriaController)
+router.get("/findAll/", authMiddleware, categoriaController.findAllCategoriaController)
 
 router.post("/create", authMiddleware, categoriaController.createCategoriaController)
 

@@ -1,6 +1,8 @@
 const productService = require("../service/produto.service");
 const mongoose = require("mongoose")
 
+
+
 const findProductByIdController = async (req, res) => {
     try{
         const id = req.params.id;
@@ -78,10 +80,38 @@ const deleteProductController = async (req, res) => {
     }
 }
 
+const addCategoriaProdutoController = async (res, req) => {
+    try{
+        
+        req.body.createdAt = new Date();
+        const categoria = await productService.addCategoriaProdutoService(req.params.id, req.body)
+
+    
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+    }
+}
+
+const removeCategoriaProdutoController = async (res, req) => {
+    try{
+        
+        const categoria = await productService.removeCategoriaProdutoService( req.body)
+
+    
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+    }
+}
+
 module.exports = {
     findAllProductsController,
     findProductByIdController,
     createProductController,
     updateProductController,
-    deleteProductController
+    deleteProductController, 
+    addCategoriaProdutoController,
+    removeCategoriaProdutoController
+
 }
