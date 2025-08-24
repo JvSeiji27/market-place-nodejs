@@ -28,27 +28,27 @@ const addCategoriaProdutoService = (id, categoria) => {
         {
             $push: {
                 categoria: {
-                    _id: categoria.id,
+                    _id: categoria._id,
                     createdAt: categoria.createdAt
                 }
             }
         },
         {
-            new: true,
-            runValidators: true
+            new: true
+            
         }
     )
 }
 
-const removeCategoriaProdutoService = (categoria) => {
+const removeCategoriaProdutoService = (id, categoria) => {
     return Produto.findOneAndUpdate(
         {
-            _id: categotia.id
+            _id: id , "categoria._id": categoria._id
         },
         {
             $pull: {
                 categoria: {
-                    _id: categoria.id
+                    _id: categoria._id
                 }
             }
         },

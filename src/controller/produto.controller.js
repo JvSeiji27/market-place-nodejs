@@ -4,104 +4,111 @@ const mongoose = require("mongoose")
 
 
 const findProductByIdController = async (req, res) => {
-    try{
+    try {
         const id = req.params.id;
-    if(mongoose.Types.ObjectId.isValid(id) || !id){
-        return res.status(400).send({message: "ID inválido!"});
-    }
+        if (mongoose.Types.ObjectId.isValid(id) || !id) {
+            return res.status(400).send({ message: "ID inválido!" });
+        }
 
-    const user = await productService.findProductByIdService(id);
+        const user = await productService.findProductByIdService(id);
 
-    if(!user){
-        return res.status(404).send({message: "Nenhum produto encontrado!"})
-    }
+        if (!user) {
+            return res.status(404).send({ message: "Nenhum produto encontrado!" })
+        }
 
-    return res.status(200).send(user);
+        return res.status(200).send(user);
 
-    }catch(err){
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
 const findAllProductsController = async (req, res) => {
-  try{
-      const users = await productService.findAllProductsService();
+    try {
+        const users = await productService.findAllProductsService();
 
-      if(!users){
-        return res.status(404).send({message: "Nenhum produto encontrado!"})
-      }
+        if (!users) {
+            return res.status(404).send({ message: "Nenhum produto encontrado!" })
+        }
 
-      return res.status(200).send(users);
-    
-    }catch(err){
+        return res.status(200).send(users);
+
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
 const createProductController = async (req, res) => {
-      try{
-       const corpo = {
-        ...req.body,
-        userId: req.userId, //ja vou ter o id do usuário
-        createdAt: new Date()
-       }
-       const obj = await productService.createProductService(corpo);
+    try {
+        const corpo = {
+            ...req.body,
+            userId: req.userId, //ja vou ter o id do usuário
+            createdAt: new Date()
+        }
+        const obj = await productService.createProductService(corpo);
 
-       return res.status(200).send(obj);
+        return res.status(200).send(obj);
 
-    
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
 const updateProductController = async (req, res) => {
-  try{
-    res.send(await productService.updateProductService(req.params.id, req.body));
+    try {
+        res.send(await productService.updateProductService(req.params.id, req.body));
 
-    
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
 const deleteProductController = async (req, res) => {
-  try{
-    
+    try {
+
         res.send(await productService.deleteProductService(req.params.id))
-    
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
-const addCategoriaProdutoController = async (res, req) => {
-    try{
-        
+const addCategoriaProdutoController = async (req, res) => {
+    try {
+
         req.body.createdAt = new Date();
         const categoria = await productService.addCategoriaProdutoService(req.params.id, req.body)
+        res.status(200).send(categoria);
 
-    
-    }catch(err){
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
-const removeCategoriaProdutoController = async (res, req) => {
-    try{
-        
-        const categoria = await productService.removeCategoriaProdutoService( req.body)
+//se o findOne nao encontrar o retorno é NULL
 
-    
-    }catch(err){
+const removeCategoriaProdutoController = async (req, res) => {
+    try {
+
+        const categoria = await productService.removeCategoriaProdutoService(req.params.id, req.body)
+
+        if (!categoria) {
+            res.status(400).send({ message: "Algo deu errado na remoção da categoria" })
+        }
+
+        res.status(200).send(categoria);
+
+    } catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Erro inesperado tente novamente!"})
+        return res.status(500).send({ message: "Erro inesperado tente novamente!" })
     }
 }
 
@@ -110,7 +117,7 @@ module.exports = {
     findProductByIdController,
     createProductController,
     updateProductController,
-    deleteProductController, 
+    deleteProductController,
     addCategoriaProdutoController,
     removeCategoriaProdutoController
 
