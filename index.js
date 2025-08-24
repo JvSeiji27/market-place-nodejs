@@ -15,8 +15,7 @@ database.connectToDatabase();
 app.use("/usuarios", userRouter); //rotas dos usuários
 app.use("/auth", authRouter);
 app.use("/produtos", productRouter);
-app.use("/categorias", categoriaRouter);
-
+app.use("categorias", categoriaRouter)
 app.get("/", (req, res) => {
     res.send("Bem-Vindo ao nosso Market-Place");
 })
