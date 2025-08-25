@@ -42,11 +42,6 @@ const findAllCategoriaController = async (req, res) => {
 const createCategoriaController = async (req, res) => {
     try {
         const id = req.params.id;
-        const body = {
-            ...req.body,
-            createdAt: new Date(),
-        }
-
         if (!body.nome) {
             return res.status(400).send({ message: "Preencha o campo nome!" })
         }
