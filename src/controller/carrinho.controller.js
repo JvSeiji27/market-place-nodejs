@@ -36,10 +36,10 @@ const createCarrinhoController = async (req, res)=> {
     try{
         const body = {
             ...req.body,
-            userId: req.UserId
+            userId: req.userId
         }
         
-        return await carrinhoService.createCarrinhoService(body);
+        return res.status(200).send(await carrinhoService.createCarrinhoService(body));
         
 
         
@@ -52,7 +52,7 @@ const createCarrinhoController = async (req, res)=> {
 
 const updateCarrinhoController = async (req,res) => {
     try{
-        const carrinhos = await carrinhoService.updateCarrinhoService(req.params.id, req.params.body);
+        const carrinhos = await carrinhoService.updateCarrinhoService(req.params.id, req.body);
 
         return res.status(200).send(carrinhos);
     }

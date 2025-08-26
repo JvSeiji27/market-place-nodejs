@@ -13,7 +13,7 @@ const createCarrinhoService = (body) => {
 }
 
 const updateCarrinhoService = (id, body) => {
-    return Carrinho.findByIdAndUpdate(id, body);
+    return Carrinho.findByIdAndUpdate(id, body, {new: true});
 }
 
 const deleteCarrinhoService = (id) => {
