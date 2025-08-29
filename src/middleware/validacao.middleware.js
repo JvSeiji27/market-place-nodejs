@@ -45,18 +45,58 @@ const validacaoProduto = (req, res, next) => {
         erros.push("codigoBarra");
     }
 
-    if(erros.length === 1){
-        return res.status(400).send({message: `O campo ${erros} deve ser preenchido`})
-    }else if(erros.length > 1){
-         return res.status(400).send({message: `Os campos '${erros}' devem ser preenchidos`})
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
     }
 
     return next()
 }
 
 const validacaoCategoria = (req, res, next) => {
-    if(!req.body.nome){
-        return res.status(400).send({message: "Preencha o campo 'nome'!!"})
+    if (!req.body.nome) {
+        return res.status(400).send({ message: "Preencha o campo 'nome'!!" })
+    }
+    return next();
+}
+
+const validacaoPedido = (req, res, next) => {
+    let erros = [];
+    if (!req.body.precoTotal) {
+        erros.push("precoTotal");
+    }
+
+    if (!req.body.frete) {
+        erros.push("frete");
+    }
+
+    if (req.body.concluido == null) {
+        erros.push("concluido");
+    }
+
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
+    }
+    return next();
+}
+
+const validacaoCarrinho = (req, res, next) => {
+    let erros = [];
+    if (!req.body.precoTotal) {
+        erros.push("precoTotal");
+    }
+
+    if (!req.body.frete) {
+        erros.push("frete");
+    }
+
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
     }
     return next();
 }
@@ -64,5 +104,7 @@ const validacaoCategoria = (req, res, next) => {
 module.exports = {
     validaUsuario,
     validacaoProduto,
-     validacaoCategoria
+    validacaoCategoria,
+    validacaoPedido,
+    validacaoCarrinho
 }
