@@ -57,11 +57,39 @@ const removeUserAddressService = (id, addressId) => {
 }
 
 const addUserFavProductService = (id, produto) => {
+    return User.findOneAndUpdate(
+        {
+            _id:id
+        },
+        {
+            $push: {
+                produtos_fav: {
+                    _id: produto
+                }
+            }
+        },
+        {
+            new: true
+        }
 
+)
 }
 
-const removeUserFavProductService = (id) => {
-
+const removeUserFavProductService = (id, productId) => {
+    console.log(productId + " aqui");
+    return User.findOneAndUpdate(
+        {
+            _id: id, "produtos_fav._id": productId
+        },{
+            $pull: {
+                produtos_fav: {
+                    _id: productId
+                }
+            }
+        },{
+            new: true
+        }
+    )
 }
 module.exports = {
     findAllUsersService,

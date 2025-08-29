@@ -1,3 +1,5 @@
+const User = require("../model/Usuario.model");
+const { createProductService } = require("../service/produto.service");
 const userService = require("../service/usuario.service")
 const mongoose = require("mongoose")
 const findUserByIdController = async (req, res) => {
@@ -140,6 +142,12 @@ const removeUserAddressController = async (req, res) => {
 
 const addUserFavProductController = async (req, res) => {
     try {
+        const id = req.params.id;
+        const body = req.body.o;
+
+        productAdd = await userService.addUserFavProductService(id, body);
+
+        return res.status(200).send(productAdd)
 
     } catch (err) {
         console.log(err.message);
@@ -149,7 +157,9 @@ const addUserFavProductController = async (req, res) => {
 
 const removeUserFavProductController = async (req, res) => {
     try {
+        const product = await userService.removeUserFavProductService(req.params.id, req.body._id);
 
+        return res.status(200).send(product)
     } catch (err) {
         console.log(err.message);
         return res.status(500).send({ message: "Erro inesperado tente novamente!" })

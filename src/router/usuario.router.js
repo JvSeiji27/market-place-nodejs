@@ -19,7 +19,7 @@ router.put("/update/:id", userController.updateUserController);
 //ROTAS DELETE
 router.delete("/remove/:id", userController.removeUserController);
 router.delete("/removeAddress/", userController.removeUserAddressController);
-router.delete("/removeFavProduct/", userController.removeUserFavProductController) ;
+router.delete("/removeFavProduct/:id", userController.removeUserFavProductController) ;
 
 
 
