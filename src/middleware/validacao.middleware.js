@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 //por ser um middleware, sempre preciso usar o next de parâmetro tmb
 const validaUsuario = (req, res, next) => {
     if (!req.body.nome) {
@@ -101,10 +103,19 @@ const validacaoCarrinho = (req, res, next) => {
     return next();
 }
 
+const validaId = (req, res, next) => {
+  
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send({ message: "Informe um ID válido" })
+    }
+
+    return next();
+}
+
 module.exports = {
     validaUsuario,
     validacaoProduto,
     validacaoCategoria,
     validacaoPedido,
-    validacaoCarrinho
+    validacaoCarrinho, validaId
 }

@@ -4,9 +4,7 @@ const categoriaService = require("../service/categoria.service");
 const findCategoriaByIdController = async (req, res) => {
     try {
         const id = req.params.id;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send({ message: "O ID está inválido" });
-        }
+        
 
         const categoria = await categoriaService.findCategoriaByIdService(id);
 
@@ -56,9 +54,7 @@ const updateCategoriaController = async (req, res) => {
     try {
         const id = req.params.id;
         const body = req.body;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send({ message: "O ID está inválido" });
-        }
+        
         if (!body.nome) {
             return res.status(400).send({ message: "Preencha o campo nome!" })
         }
@@ -75,9 +71,7 @@ const updateCategoriaController = async (req, res) => {
 const deleteCategoriaController = async (req, res) => {
     try {
         const id = req.params.id;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send({ message: "O ID está inválido" });
-        }
+        
         const removedItem = await categoriaService.deleteCategoriaService(id);
 
         if(!removedItem){

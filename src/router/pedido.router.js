@@ -3,18 +3,18 @@ const router  = express.Router();
 
 const pedidoController = require("../controller/pedido.controller");
 const authMiddleware = require("../middleware/auth.middleware");
-const {validacaoPedido} = require("../middleware/validacao.middleware")
+const {validacaoPedido, validaId} = require("../middleware/validacao.middleware")
 
 
-router.get("/findById/:id", authMiddleware, pedidoController.findPedidoByIdController)
+router.get("/findById/:id", authMiddleware,validaId, pedidoController.findPedidoByIdController)
 router.get("/findAll/", authMiddleware, pedidoController.findAllPedidosController)
 
 router.post("/create/", authMiddleware, validacaoPedido, pedidoController.createPedidoController);
 
 //no update nao precisa
-router.patch("/patch/:id", authMiddleware, pedidoController.updateStatusPedidoController)
+router.patch("/patch/:id", authMiddleware,validaId, pedidoController.updateStatusPedidoController)
 
-router.delete("/delete/:id", authMiddleware, pedidoController.deletePedidoController);
+router.delete("/delete/:id", authMiddleware, validaId, pedidoController.deletePedidoController);
 
 
 module.exports = router

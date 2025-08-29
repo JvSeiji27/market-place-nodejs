@@ -6,9 +6,6 @@ const mongoose = require("mongoose")
 const findProductByIdController = async (req, res) => {
     try {
         const id = req.params.id;
-        if (!mongoose.Types.ObjectId.isValid(id) || !id) {
-            return res.status(400).send({ message: "ID inválido!" });
-        }
 
         const user = await productService.findProductByIdService(id);
 
