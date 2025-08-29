@@ -112,10 +112,28 @@ const validaId = (req, res, next) => {
     return next();
 }
 
+const validacaoLogin = (req, res, next) => {
+    let erros = [];
+    if (!req.body.email) {
+        erros.push("email");
+    }
+
+    if (!req.body.senha) {
+        erros.push("senha");
+    }
+
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
+    }
+    return next();
+
+}
 module.exports = {
     validaUsuario,
     validacaoProduto,
     validacaoCategoria,
     validacaoPedido,
-    validacaoCarrinho, validaId
+    validacaoCarrinho, validaId, validacaoLogin
 }
