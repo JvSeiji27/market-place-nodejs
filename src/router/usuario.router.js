@@ -1,26 +1,27 @@
 const express = require("express");
-const  router = express.Router();
+const router = express.Router();
 const userController = require("../controller/usuario.controller")
 const authMiddleware = require("../middleware/auth.middleware")
+const { validaUsuario } = require("../middleware/validacao.middleware")
 //OBS: todos devem começar com barra
 
 //ROTAS GET
 router.get("/findById/:id", authMiddleware, userController.findUserByIdController);
-router.get("/findAll/", userController.findAllUsersController);
+router.get("/findAll/", authMiddleware, userController.findAllUsersController);
 
 //ROTAS POST
-router.post("/create/", userController.createUserController);
-router.post("/addAddress/:id",userController.addUserAddressController);
-router.post("/addFavProduct/:id", userController.addUserFavProductController);
+// A ordem importa, preciso do token antes e dps valido dados. no create nao preciso do login? nao faz sentido
+router.post("/create/", validaUsuario, userController.createUserController);
+router.post("/addAddress/:id", authMiddleware, userController.addUserAddressController);
+router.post("/addFavProduct/:id", authMiddleware, userController.addUserFavProductController);
 
 //ROTAS PUT
-router.put("/update/:id", userController.updateUserController);
+router.put("/update/:id", authMiddleware, validaUsuario, userController.updateUserController);
 
 //ROTAS DELETE
-router.delete("/remove/:id", userController.removeUserController);
-router.delete("/removeAddress/", userController.removeUserAddressController);
-router.delete("/removeFavProduct/:id", userController.removeUserFavProductController) ;
-
+router.delete("/remove/:id", authMiddleware, userController.removeUserController);
+router.delete("/removeAddress/", authMiddleware, userController.removeUserAddressController);
+router.delete("/removeFavProduct/:id", authMiddleware, userController.removeUserFavProductController);
 
 
 module.exports = router;

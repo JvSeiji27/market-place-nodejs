@@ -42,10 +42,6 @@ const findAllCategoriaController = async (req, res) => {
 const createCategoriaController = async (req, res) => {
     try {
         const id = req.params.id;
-        if (!body.nome) {
-            return res.status(400).send({ message: "Preencha o campo nome!" })
-        }
-
         const createdItem = await categoriaService.createCategoriaService(body);
 
         return res.status(201).send(createdItem);

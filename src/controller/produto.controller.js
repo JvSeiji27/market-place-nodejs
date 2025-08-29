@@ -48,7 +48,7 @@ const createProductController = async (req, res) => {
         }
         const obj = await productService.createProductService(corpo);
 
-        return res.status(200).send(obj);
+        return res.status(201).send(obj);
 
 
     } catch (err) {

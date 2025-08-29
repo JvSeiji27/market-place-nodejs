@@ -46,12 +46,6 @@ const createUserController = async (req, res) => {
         if (!user || Object.keys(user).length === 0) {
             return res.status(400).send({ message: "Body vazio" })
         }
-        const parts = ["nome", "email", "senha", "imagem"];
-        for (const part of parts) {
-            if (!user[part]) {
-                return res.status(400).send(`Este campo "${part}" está vazio`);
-            }
-        }
         user = await userService.createUserService(user);
         return res.status(200).send(user);
     } catch (err) {
