@@ -6,6 +6,7 @@ const authRouter = require("./src/router/auth.router")
 const categoriaRouter = require("./src/router/categoria.router")
 const productRouter = require("./src/router/produto.router")//arquivo de rota produtos
 const carrinhoRouter = require("./src/router/carrinho.router")
+const pedidoRouter = require("./src/router/pedido.router");
 const app = express();
 const port = 3000;
 
@@ -18,6 +19,7 @@ app.use("/auth", authRouter);
 app.use("/produtos", productRouter);
 app.use("/categorias", categoriaRouter)
 app.use("/carrinhos", carrinhoRouter)
+app.use("/pedidos", pedidoRouter)
 app.get("/", (req, res) => {
     res.send("Bem-Vindo ao nosso Market-Place");
 })
