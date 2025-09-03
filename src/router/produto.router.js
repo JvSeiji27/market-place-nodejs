@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productController = require("../controller/produto.controller")
 const authMiddleware = require("../middleware/auth.middleware");
-const { validacaoProduto, validaId } = require("../middleware/validacao.middleware");
+const { validacaoProduto, validaId, validaIdBody } = require("../middleware/validacao.middleware");
 const {paginacao} = require("../middleware/paginacao.middleware")
 
 router.get("/find/:id", authMiddleware, validaId, productController.findProductByIdController);
@@ -10,7 +10,7 @@ router.get("/find/:id", authMiddleware, validaId, productController.findProductB
 router.get("/findAll", authMiddleware, paginacao ,productController.findAllProductsController);
 
 router.post("/create", authMiddleware, validacaoProduto, productController.createProductController);
-router.post("/addCategoria/:id", authMiddleware, validaId, productController.addCategoriaProdutoController)
+router.post("/addCategoria/:id", authMiddleware, validaId,validaIdBody ,productController.addCategoriaProdutoController)
 
 router.put("/update/:id", authMiddleware,validaId, validacaoProduto, productController.updateProductController);
 

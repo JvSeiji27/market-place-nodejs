@@ -104,7 +104,7 @@ const validacaoCarrinho = (req, res, next) => {
 }
 
 const validaId = (req, res, next) => {
-  
+
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
         return res.status(400).send({ message: "Informe um ID válido" })
     }
@@ -130,10 +130,68 @@ const validacaoLogin = (req, res, next) => {
     return next();
 
 }
+
+const validaEndereco = (req, res, next) => {
+    let erros = [];
+    req.body.map((value, key) => { //map percorre os objetos
+        if (!value.rua) {
+            erros.push(`'${key + 1} - rua'`)
+        }
+        if (!value.numero) {
+            erros.push(`'${key + 1} - numero'`)
+        }
+        if (!value.CEP) {
+            erros.push(`'${key + 1} - CEP'`)
+        }
+    });
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
+    }
+    return next();
+
+}
+
+const validaIdBody = (req, res, next) => {
+    const id = req.body._id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send({ message: `O ID não corresponde aos padrões necessários` })
+    }
+
+    return next();
+}
+
+const validaProdutos = (req, res, next) => {
+    let erros = [];
+    req.body.produtos.map((value, key) => { //map percorre os objetos
+        if (!value._id) {
+            erros.push(`'${key + 1} - id'`)
+        }
+        if (!mongoose.Types.ObjectId.isValid(value._id)) {
+            erros.push(`'${key + 1} - id invalido'`)
+        }
+        if (!value.quantidade) {
+            erros.push(`'${key + 1} - quantidade'`)
+
+        }
+    });
+    if (erros.length === 1) {
+        return res.status(400).send({ message: `O campo ${erros} deve ser preenchido` })
+    } else if (erros.length > 1) {
+        return res.status(400).send({ message: `Os campos '${erros}' devem ser preenchidos` })
+    }
+    return next();
+
+}
+
+
 module.exports = {
     validaUsuario,
     validacaoProduto,
     validacaoCategoria,
     validacaoPedido,
-    validacaoCarrinho, validaId, validacaoLogin
+    validacaoCarrinho, validaId, validacaoLogin, validaEndereco, validaIdBody, 
+    validaProdutos
 }

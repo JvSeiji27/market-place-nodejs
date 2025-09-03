@@ -129,10 +129,10 @@ const findUserByIdController = async (req, res) => {
     const addUserFavProductController = async (req, res) => {
         try {
             const id = req.params.id;
-            const body = req.body.o;
-
+            const body = req.body._id;
+            console.log("antes service")
             productAdd = await userService.addUserFavProductService(id, body);
-
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFEEEEEEEEEEEE")
             return res.status(200).send(productAdd)
 
         } catch (err) {
