@@ -23,7 +23,8 @@ const findProductByIdController = async (req, res) => {
 
 const findAllProductsController = async (req, res) => {
     try {
-        const users = await productService.findAllProductsService();
+        console.log(`CONTROLLER: OFFSET: ${req.query.offset}, LIMIT: ${req.query.limit} `)
+        const users = await productService.findAllProductsService(req.query.limit, req.query.offset);
 
         if (!users) {
             return res.status(404).send({ message: "Nenhum produto encontrado!" })

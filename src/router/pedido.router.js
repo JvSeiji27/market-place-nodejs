@@ -4,6 +4,8 @@ const router  = express.Router();
 const pedidoController = require("../controller/pedido.controller");
 const authMiddleware = require("../middleware/auth.middleware");
 const {validacaoPedido, validaId} = require("../middleware/validacao.middleware")
+const {paginacao} = require("../middleware/paginacao.middleware")
+
 
 
 router.get("/findById/:id", authMiddleware,validaId, pedidoController.findPedidoByIdController)

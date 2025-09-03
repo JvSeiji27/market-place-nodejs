@@ -3,6 +3,8 @@ const router = express.Router();
 const userController = require("../controller/usuario.controller")
 const authMiddleware = require("../middleware/auth.middleware")
 const { validaUsuario, validaId } = require("../middleware/validacao.middleware")
+const {paginacao} = require("../middleware/paginacao.middleware")
+
 //OBS: todos devem começar com barra
 
 //ROTAS GET
